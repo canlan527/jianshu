@@ -1,7 +1,8 @@
 import React from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import { actionCreators } from './store'
+import { actionCreators } from "./store";
+import {toJS} from 'immutable'
 import {
   HeaderWrapper,
   Logo,
@@ -18,6 +19,29 @@ import {
   Button,
 } from "./style";
 
+const getListArea = (props, show) => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          热门搜索
+          <SearchInfoSwitch>换一批</SearchInfoSwitch>
+        </SearchInfoTitle>
+        <SearchInfoList>
+          {
+            props.list.map(item => {
+              console.log(item);
+              return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+            })
+          }
+        </SearchInfoList>
+      </SearchInfo>
+    );
+  }
+  // else {
+  //   return null;
+  // }
+};
 
 const Header = (props) => {
   const { focused, handleInputFocus, handleInputBlur } = props;
@@ -53,6 +77,7 @@ const Header = (props) => {
           <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
             &#xe6ac;
           </i>
+          {getListArea(props, focused)}
         </SearchWrapper>
       </Nav>
       <Addition>
@@ -64,29 +89,26 @@ const Header = (props) => {
       </Addition>
     </HeaderWrapper>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
-    focused: state.getIn(['header', 'focused'])
-  }
-}
+    focused: state.getIn(["header", "focused"]),
+    list: state.getIn(["header", "list"]),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus() {
-      const action = actionCreators.searchFocusAction(true)
-      dispatch(action)
+      dispatch(actionCreators.getHotwords())
+      dispatch(actionCreators.searchFocusAction(true));
     },
     handleInputBlur() {
-      const action = actionCreators.searchFocusAction(false)
-      dispatch(action)
-    }
-  }
-}
-
-
+      const action = actionCreators.searchFocusAction(false);
+      dispatch(action);
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
-
-
