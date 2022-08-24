@@ -3,7 +3,10 @@ import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
   focused: false,
-  list: []
+  list: [],
+  page: 1,
+  totalPage:1,
+  mouseIn: false,
 });
 
 export default (state = defaultState, action) => {
@@ -11,17 +14,12 @@ export default (state = defaultState, action) => {
     case actionTypes.SEARCH_FOCUS:
       return state.set('focused', action.value)
     case actionTypes.GET_HOT_WORDS:
-      return state.set('list', action.data)
+      return state.set('list', action.data).set('totalPage', action.totalPage);
+    case actionTypes.CHANGE_MOUSE_IN:
+      return state.set('mouseIn', action.value)
+    case actionTypes.CHANGE_PAGE:
+      return state.set('page', action.page)
     default:
       return state;
   }
-    
-  // if(action.type === actionTypes.SEARCH_FOCUS) {
-  //   return state.set('focused', action.value)
-  // }
-  // if(action.type === actionTypes.GET_HOT_WORDS) {
-  //   return state.set('list', action.data)
-  // }
-  
-  return state;
 }

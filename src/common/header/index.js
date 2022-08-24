@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
-import {toJS} from 'immutable'
 import {
   HeaderWrapper,
   Logo,
@@ -19,28 +18,34 @@ import {
   Button,
 } from "./style";
 
-const getListArea = (props, show) => {
-  if (show) {
+const getListArea = (props) => {
+  const { focused, mouseIn, list, page, totalPage, handleMouseIn,handleMouseLeave, handlePageChange} = props;
+  const newList = list.toJS();
+  const infoItemList = [];
+
+  if(newList.length) {
+    for(let i = (page - 1) * 10; i < page * 10; i ++) {
+      infoItemList.push(
+        <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
+      )
+    }
+  }
+
+  if (focused || mouseIn) {
     return (
-      <SearchInfo>
+      <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseLeave}>
         <SearchInfoTitle>
           热门搜索
-          <SearchInfoSwitch>换一批</SearchInfoSwitch>
+          <SearchInfoSwitch onClick={() => handlePageChange(page, totalPage)}>换一批</SearchInfoSwitch>
         </SearchInfoTitle>
         <SearchInfoList>
           {
-            props.list.map(item => {
-              console.log(item);
-              return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-            })
+            infoItemList
           }
         </SearchInfoList>
       </SearchInfo>
     );
   }
-  // else {
-  //   return null;
-  // }
 };
 
 const Header = (props) => {
@@ -77,7 +82,7 @@ const Header = (props) => {
           <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
             &#xe6ac;
           </i>
-          {getListArea(props, focused)}
+          {getListArea(props)}
         </SearchWrapper>
       </Nav>
       <Addition>
@@ -95,6 +100,9 @@ const mapStateToProps = (state) => {
   return {
     focused: state.getIn(["header", "focused"]),
     list: state.getIn(["header", "list"]),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
   };
 };
 
@@ -108,6 +116,25 @@ const mapDispatchToProps = (dispatch) => {
       const action = actionCreators.searchFocusAction(false);
       dispatch(action);
     },
+    handleMouseIn() {
+      const action = actionCreators.mouseInAction(true);
+      dispatch(action)
+    },
+    handleMouseLeave() {
+      const action = actionCreators.mouseInAction(false);
+      dispatch(action);
+    },
+    handlePageChange(page, totalPage) {
+      if(page < totalPage) {
+        page ++;
+        const action = actionCreators.changePageAction(page)
+        dispatch(action)
+        console.log(page, totalPage);
+      } else {
+        const action = actionCreators.changePageAction(1)
+        dispatch(action)
+      }
+    }
   };
 };
 
