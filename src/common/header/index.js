@@ -25,9 +25,12 @@ const getListArea = (props) => {
 
   if(newList.length) {
     for(let i = (page - 1) * 10; i < page * 10; i ++) {
-      infoItemList.push(
-        <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
-      )
+      if(i < newList.length) {
+        infoItemList.push(
+          <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
+        )
+      }
+      
     }
   }
 
