@@ -20,21 +20,20 @@ import {
 
 const getListArea = (props) => {
   const { focused, mouseIn, list, page, totalPage, handleMouseIn,handleMouseLeave, handlePageChange} = props;
-  const newList = list.toJS();
-  const infoItemList = [];
+  const newList = list.toJS(); // list是immutable类型的数据，不能遍历，需要转成js对象
+  const infoItemList = []; // 存放固定长度的热搜item
 
   if(newList.length) {
     for(let i = (page - 1) * 10; i < page * 10; i ++) {
-      if(i < newList.length) {
+      if(i < newList.length) { // i取值不能超过list长度，不然会出错，取到超出范围的i值
         infoItemList.push(
           <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
         )
       }
-      
     }
   }
 
-  if (focused || mouseIn) {
+  if (focused || mouseIn) { // 聚焦和鼠标移入的时候都展示SearchInfo框
     return (
       <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseLeave}>
         <SearchInfoTitle>
@@ -128,12 +127,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
     handlePageChange(page, totalPage) {
-      if(page < totalPage) {
-        page ++;
+      if(page < totalPage) { // 当前页小于总页码的时候
+        page ++; // 页码新增
         const action = actionCreators.changePageAction(page)
         dispatch(action)
-        console.log(page, totalPage);
-      } else {
+      } else { // 当当前页超过总页码的时候，就变成第一页
         const action = actionCreators.changePageAction(1)
         dispatch(action)
       }

@@ -14,7 +14,10 @@ export default (state = defaultState, action) => {
     case actionTypes.SEARCH_FOCUS:
       return state.set('focused', action.value)
     case actionTypes.GET_HOT_WORDS:
-      return state.set('list', action.data).set('totalPage', action.totalPage);
+      return state.merge({
+        'list': action.data,
+        'totalPage':  action.totalPage
+      })
     case actionTypes.CHANGE_MOUSE_IN:
       return state.set('mouseIn', action.value)
     case actionTypes.CHANGE_PAGE:
