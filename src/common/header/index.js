@@ -62,7 +62,7 @@ const getListArea = (props) => {
 };
 
 const Header = (props) => {
-  const { focused, handleInputFocus, handleInputBlur } = props;
+  const { focused, handleInputFocus, handleInputBlur, list } = props;
   return (
     <HeaderWrapper>
       <Logo />
@@ -88,7 +88,7 @@ const Header = (props) => {
           <CSSTransition in={focused} timeout={200} classNames="slide">
             <NavSearch
               className={focused ? "focused" : ""}
-              onFocus={handleInputFocus}
+              onFocus={() => handleInputFocus(list)}
               onBlur={handleInputBlur}
             ></NavSearch>
           </CSSTransition>
@@ -121,8 +121,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getHotwords());
+    handleInputFocus(list) {
+      // console.log(list);
+      !list.size && dispatch(actionCreators.getHotwords());
       dispatch(actionCreators.searchFocusAction(true));
     },
     handleInputBlur() {
