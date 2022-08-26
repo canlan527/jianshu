@@ -18,7 +18,6 @@ export const getHotwords = () => {
   return (dispatch) => {
     axios.get("/api/hotword.json").then((res) => {
       const { data } = res.data;
-      console.log(data);
       const action = initHotwordAction(data);
       dispatch(action);
     });

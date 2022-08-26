@@ -19,32 +19,43 @@ import {
 } from "./style";
 
 const getListArea = (props) => {
-  const { focused, mouseIn, list, page, totalPage, handleMouseIn,handleMouseLeave, handlePageChange} = props;
+  const spinRef = React.createRef();
+  const {
+    focused,
+    mouseIn,
+    list,
+    page,
+    totalPage,
+    handleMouseIn,
+    handleMouseLeave,
+    handlePageChange,
+  } = props;
   const newList = list.toJS(); // list是immutable类型的数据，不能遍历，需要转成js对象
   const infoItemList = []; // 存放固定长度的热搜item
 
-  if(newList.length) {
-    for(let i = (page - 1) * 10; i < page * 10; i ++) {
-      if(i < newList.length) { // i取值不能超过list长度，不然会出错，取到超出范围的i值
+  if (newList.length) {
+    for (let i = (page - 1) * 10; i < page * 10; i++) {
+      if (i < newList.length) {
+        // i取值不能超过list长度，不然会出错，取到超出范围的i值
         infoItemList.push(
           <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
-        )
+        );
       }
     }
   }
 
-  if (focused || mouseIn) { // 聚焦和鼠标移入的时候都展示SearchInfo框
+  if (focused || mouseIn) {
+    // 聚焦和鼠标移入的时候都展示SearchInfo框
     return (
       <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseLeave}>
         <SearchInfoTitle>
           热门搜索
-          <SearchInfoSwitch onClick={() => handlePageChange(page, totalPage)}>换一批</SearchInfoSwitch>
+          <SearchInfoSwitch onClick={() => handlePageChange(page, totalPage, spinRef)}>
+            <i ref={spinRef} className="iconfont spin">&#xe6aa;</i>
+            换一批
+          </SearchInfoSwitch>
         </SearchInfoTitle>
-        <SearchInfoList>
-          {
-            infoItemList
-          }
-        </SearchInfoList>
+        <SearchInfoList>{infoItemList}</SearchInfoList>
       </SearchInfo>
     );
   }
@@ -102,16 +113,16 @@ const mapStateToProps = (state) => {
   return {
     focused: state.getIn(["header", "focused"]),
     list: state.getIn(["header", "list"]),
-    page: state.getIn(['header', 'page']),
-    totalPage: state.getIn(['header', 'totalPage']),
-    mouseIn: state.getIn(['header', 'mouseIn']),
+    page: state.getIn(["header", "page"]),
+    totalPage: state.getIn(["header", "totalPage"]),
+    mouseIn: state.getIn(["header", "mouseIn"]),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus() {
-      dispatch(actionCreators.getHotwords())
+      dispatch(actionCreators.getHotwords());
       dispatch(actionCreators.searchFocusAction(true));
     },
     handleInputBlur() {
@@ -120,22 +131,30 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleMouseIn() {
       const action = actionCreators.mouseInAction(true);
-      dispatch(action)
+      dispatch(action);
     },
     handleMouseLeave() {
       const action = actionCreators.mouseInAction(false);
       dispatch(action);
     },
-    handlePageChange(page, totalPage) {
-      if(page < totalPage) { // 当前页小于总页码的时候
-        page ++; // 页码新增
-        const action = actionCreators.changePageAction(page)
-        dispatch(action)
-      } else { // 当当前页超过总页码的时候，就变成第一页
-        const action = actionCreators.changePageAction(1)
-        dispatch(action)
+    handlePageChange(page, totalPage,spinRef) {
+      const spinDom = spinRef.current;// 拿到ref中的dom
+      const reg = /[^0-9]/ig; // 定义截取数字的正则
+      let originAngle = spinDom.style.transform.replace(reg, ''); // 拿到spinDom的原始旋转度数
+      originAngle = originAngle ? parseInt(originAngle, 10) : 0; // 因为后续要累加旋转度数，这里要转换成数字类型 
+      spinDom.style.transform = `rotate(${360 + originAngle}deg)`; // 用360度和前一次旋转的度数累加
+      // console.log(originAngle,spinDom.style.transform);
+      if (page < totalPage) {
+        // 当前页小于总页码的时候
+        page++; // 页码新增
+        const action = actionCreators.changePageAction(page);
+        dispatch(action);
+      } else {
+        // 当当前页超过总页码的时候，就变成第一页
+        const action = actionCreators.changePageAction(1);
+        dispatch(action);
       }
-    }
+    },
   };
 };
 
