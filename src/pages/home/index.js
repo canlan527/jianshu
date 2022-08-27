@@ -1,11 +1,17 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { actionCreators } from './store'
 import Category from "./components/category";
 import List from "./components/list";
 import Writer from "./components/writer";
 import Recommend from "./components/recommend";
 
 import { HomeWrapper, HomLeftSection, HomeRightSection } from "./style";
-export default class Home extends Component {
+ class Home extends Component {
+
+  componentDidMount() {
+    this.props.getHomeData();
+  }
 
   render() {
     return (
@@ -30,3 +36,13 @@ export default class Home extends Component {
   }
 }
 
+const mapDispatch = (dispatch) => {
+  return {
+    getHomeData() {
+      const action = actionCreators.fetchData()
+      dispatch(action)
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(Home);
