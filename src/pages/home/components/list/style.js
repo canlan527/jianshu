@@ -17,13 +17,13 @@ export const ListItem = styled.li`
 export const ListItemInfo = styled.div`
   flex: 1;
   padding-right: 12px;
-  
 `;
 
-export const ItemTitle = styled.h2`
+export const ItemTitle = styled.span`
   font-size: 22px;
   font-weight: bold;
   line-height: 28px;
+  display: inline-block;
   color: #333;
   margin-bottom: 8px;
   cursor: pointer;
