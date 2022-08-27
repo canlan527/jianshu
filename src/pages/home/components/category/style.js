@@ -14,14 +14,13 @@ export const CateItem = styled.div`
   background: #f7f7f7;
   font-size: 14px;
   color: #424242;
-  border: 1px solid #727272;
+  border: 1px solid #f7f7f7;
   border-radius: 4px;
   line-height: 32px;
   display: flex;
   cursor: pointer;
   &:hover {
     background: #f9f9f9;
-    border-color: #707070;
     color: #666;
   }
 `;

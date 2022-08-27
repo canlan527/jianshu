@@ -19,7 +19,7 @@ class Category extends Component {
             </CateItem>
           ))
         }
-        <SeeMore> &gt;&gt;&gt;查看更多分类专栏.. </SeeMore>
+        <SeeMore> &gt;&gt;&gt; 查看更多分类专栏.. </SeeMore>
       </CateWrapper>
     );
   }
