@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 export const ListWrapper = styled.ul`
-  width: 100%;
+  width: 600px;
+  margin-right: 15px;
   border-top: 1px solid #f1f1f1;
 `;
 
 export const ListItem = styled.li`
   width: 100%;
   display: flex;
-  padding: 20px 0 12px 0;
+  padding: 20px 15px 12px 0;
   border-bottom: 1px solid #f1f1f1;
+  box-sizing: boder-box;
 `;
 
 export const ListItemInfo = styled.div`
@@ -36,6 +38,7 @@ export const ItemDesc = styled.div`
   font-size: 13px;
   color: #999;
   line-height:22px;
+  margin-bottom: 12px;
 `;
 
 export const ItemInfo = styled.div`
@@ -76,7 +79,7 @@ export const ItemInfo = styled.div`
         }
       }
     }
-    .likeNumber {
+    .commentNumber, .likeNumber {
       display:inline-block;
       transform: translateY(-1px)
     }

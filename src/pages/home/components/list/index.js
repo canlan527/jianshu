@@ -40,7 +40,7 @@ class List extends Component {
                 <div className="item-meta author">{item.get("author")}</div>
                 <div className="item-meta">
                   <i className="iconfont comment">&#xe62b;</i>
-                  {item.get("comment")}
+                  <span className="commentNumber">{item.get("comment")}</span>
                 </div>
                 <div className="item-meta">
                   <i className="iconfont like">&#xe707;</i>
