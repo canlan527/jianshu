@@ -20,7 +20,7 @@ export const ListItemInfo = styled.div`
 
 export const ItemTitle = styled.h2`
   font-size: 22px;
-  font-weight: blod;
+  font-weight: bold;
   line-height: 28px;
   color: #333;
   margin-bottom: 8px;
@@ -97,3 +97,19 @@ export const ListImg = styled.a`
   }
 `;
 
+export const ReadMore= styled.div`
+  margin: 50px 0;
+  width: 100%;
+  font-size: 15px;
+  color:#fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  background: #999;
+  border-radius: 12px;
+  cursor: pointer;
+  &:hover {
+    background: #777;
+  }
+`;

@@ -75,6 +75,61 @@ const defaultState = fromJS({
       author: '牛牛平常'
     },
   ],
+  recommendList: [
+    {
+      id: 'r-1',
+      imgUrl: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/banner1.png'
+    },
+    {
+      id: 'r-2',
+      imgUrl: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/banner2.png'
+    },
+    {
+      id: 'r-3',
+      imgUrl: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/banner3.png'
+    },
+    {
+      id: 'r-4',
+      imgUrl: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/banner4.png'
+    },
+  ],
+  writerList: [
+    {
+      id: 'w-1',
+      name: '宋泽凡',
+      avatar: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/w1.png',
+      TotalWords: '39k',
+      like: '12k'
+    },
+    {
+      id: 'w-2',
+      name: '落落青丘',
+      avatar: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/w2.png',
+      TotalWords: '315k',
+      like: '20k'
+    },
+    {
+      id: 'w-3',
+      name: '梅石银',
+      avatar: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/w3.png',
+      TotalWords: '198k',
+      like: '15k'
+    },
+    {
+      id: 'w-4',
+      name: 'Hobbit霍比特人',
+      avatar: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/w4.jpeg',
+      TotalWords: '18.9k',
+      like: '10k'
+    },
+    {
+      id: 'w-5',
+      name: '金贤重',
+      avatar: 'https://cdn.jsdelivr.net/gh/canlan527/pics@main/w5.jpeg',
+      TotalWords: '30k',
+      like: '2.5k'
+    },
+  ]
 });
 
 

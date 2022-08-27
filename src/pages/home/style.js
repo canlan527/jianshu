@@ -24,6 +24,5 @@ export const HomLeftSection = styled.div`
 export const HomeRightSection = styled.div`
   width: 300px;
   height: 100%;
-  background: red;
   float: left;
 `;

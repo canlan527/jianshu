@@ -11,6 +11,7 @@ class Category extends Component {
             <CateItem key={item.get('id')}>
               <CateImg>
                 <img
+                  alt=''
                   className="img"
                   src={item.get('imgUrl')}
                 />
