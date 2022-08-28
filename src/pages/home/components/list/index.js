@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { actionCreators } from "../../store";
 import {
   ListWrapper,
   ListItem,
@@ -9,6 +10,7 @@ import {
   ListImg,
   ItemInfo,
   ReadMore,
+  ReadNoMore,
 } from "./style";
 
 class List extends Component {
@@ -25,10 +27,22 @@ class List extends Component {
   }
 
   render() {
+    const { blogList, page, totalPage, handleLoadMore } = this.props;
+    let renderReadMore = null;
+    if (page >= totalPage) {
+      renderReadMore = <ReadNoMore>没有更多了……</ReadNoMore>;
+    } else {
+      renderReadMore = (
+        <ReadMore onClick={() => handleLoadMore(page, totalPage)}>
+          阅读更多
+        </ReadMore>
+      );
+    }
+
     return (
       <ListWrapper>
-        {this.props.blogList.map((item) => (
-          <ListItem key={item.get("id")}>
+        {blogList.map((item, index) => (
+          <ListItem key={index}>
             <ListItemInfo>
               <ItemTitle>{item.get("title")}</ItemTitle>
               <ItemDesc>{item.get("desc")}</ItemDesc>
@@ -51,8 +65,8 @@ class List extends Component {
             {this.renderListImg(item.get("imgUrl"))}
           </ListItem>
         ))}
-
-        <ReadMore>阅读更多</ReadMore>
+        {/* <ReadMore onClick={() => handleLoadMore(page, totalPage)}>阅读更多</ReadMore> */}
+        {renderReadMore}
       </ListWrapper>
     );
   }
@@ -61,7 +75,18 @@ class List extends Component {
 const mapStateToProps = (state) => {
   return {
     blogList: state.getIn(["home", "blogList"]),
+    page: state.getIn(["home", "blogPage"]),
+    totalPage: state.getIn(["home", "totalPage"]),
   };
 };
 
-export default connect(mapStateToProps, null)(List);
+const mapDispatchToProps = (dispatch) => ({
+  handleLoadMore(page, totalPage) {
+    console.log(page);
+    page++;
+    const action = actionCreators.loadMoreAction(page);
+    dispatch(action);
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

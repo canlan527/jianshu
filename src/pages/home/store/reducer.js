@@ -6,6 +6,8 @@ const defaultState = fromJS({
   blogList: [],
   recommendList: [],
   writerList: [],
+  blogPage: 1,
+  totalPage: 6
 });
 
 
@@ -17,7 +19,12 @@ export default (state = defaultState, action) => {
         blogList: action.blogList,
         recommendList: action.recommendList,
         writerList: action.writerList,
-      })
+      });
+    case actionTypes.LOAD_MORE_BLOG:
+      return state.merge({
+        blogList: state.get('blogList').concat(action.data), // 将新获取的blogList拼接在state.blogList后
+        blogPage: action.nextPage, // 设置页数
+      });
     default:
       return state;
   }

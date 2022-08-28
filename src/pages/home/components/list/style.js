@@ -116,3 +116,12 @@ export const ReadMore= styled.div`
     background: #777;
   }
 `;
+
+export const ReadNoMore = styled.div`
+  width: 100%;
+  height: 120px;
+  line-height: 90px;
+  color: #777;
+  font-size: 13px;
+  text-align: center;
+`;
