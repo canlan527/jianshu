@@ -1,4 +1,4 @@
-import { injectGlobal } from "styled-components";
+import styled, { injectGlobal } from "styled-components";
 
 injectGlobal`
   html, body, div, span, applet, object, iframe,
@@ -26,8 +26,9 @@ injectGlobal`
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
-  body {
+  html, body {
     line-height: 1;
+    scroll-behavior:smooth; 
   }
   ol, ul {
     list-style: none;

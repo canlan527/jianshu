@@ -7,7 +7,8 @@ const defaultState = fromJS({
   recommendList: [],
   writerList: [],
   blogPage: 1,
-  totalPage: 6
+  totalPage: 6,
+  showScrollTop: false,
 });
 
 
@@ -25,6 +26,8 @@ export default (state = defaultState, action) => {
         blogList: state.get('blogList').concat(action.data), // 将新获取的blogList拼接在state.blogList后
         blogPage: action.nextPage, // 设置页数
       });
+    case actionTypes.CHANGE_SCROLL_TOP_SHOW:
+      return state.set('showScrollTop', action.value)
     default:
       return state;
   }

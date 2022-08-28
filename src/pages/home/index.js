@@ -1,21 +1,32 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { actionCreators } from './store'
+import { connect } from "react-redux";
+import { actionCreators } from "./store";
 import Category from "./components/category";
 import List from "./components/list";
 import Writer from "./components/writer";
 import Recommend from "./components/recommend";
-
+import ToTop from "../../common/toTop";
 import { HomeWrapper, HomLeftSection, HomeRightSection } from "./style";
- class Home extends Component {
+
+class Home extends Component {
 
   componentDidMount() {
     this.props.getHomeData();
+    this.bindEvent();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.props.handleScrollTop)
+  }
+
+  bindEvent() {
+    window.addEventListener('scroll', this.props.handleScrollTop)
   }
 
   render() {
+    const { showScrollTop } = this.props;
     return (
-      <div>
+      <div ref={(dom) => this.homeRef = dom}>
         <HomeWrapper>
           <HomLeftSection>
             <img
@@ -30,19 +41,35 @@ import { HomeWrapper, HomLeftSection, HomeRightSection } from "./style";
             <Recommend></Recommend>
             <Writer></Writer>
           </HomeRightSection>
+          { showScrollTop ? <ToTop></ToTop> : null }
         </HomeWrapper>
       </div>
+        
     );
   }
 }
 
+const mapState = (state) => ({
+  showScrollTop: state.getIn(["home", "showScrollTop"]),
+});
+
 const mapDispatch = (dispatch) => {
   return {
     getHomeData() {
-      const action = actionCreators.fetchData()
-      dispatch(action)
+      const action = actionCreators.fetchData();
+      dispatch(action);
+    },
+    handleScrollTop(e) {
+      const scrollTop = document.documentElement.scrollTop;
+      if(scrollTop > 1000) {
+        const action = actionCreators.changeScrollTop(true);
+        dispatch(action)
+      } else {
+        const action = actionCreators.changeScrollTop(false);
+        dispatch(action)
+      }
     }
-  }
-}
+  };
+};
 
-export default connect(null, mapDispatch)(Home);
+export default connect(mapState, mapDispatch)(Home);

@@ -40,3 +40,9 @@ export const loadMoreAction = (page) => {
     })
   }
 }
+
+// 处理滚动到顶部
+export const changeScrollTop = (value) => ({
+  type: actionTypes.CHANGE_SCROLL_TOP_SHOW,
+  value,
+})
