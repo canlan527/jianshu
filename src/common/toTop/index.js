@@ -6,7 +6,9 @@ export default class ToTop extends Component {
     window.scrollTo(0, 0);
   }
   render() {
-    return <ToTopBox onClick={this.handleScrollTop}>回到顶部</ToTopBox>;
+    return <ToTopBox onClick={this.handleScrollTop}>
+      <i className="iconfont">&#xe84d;</i>
+      </ToTopBox>;
   }
 }
 
