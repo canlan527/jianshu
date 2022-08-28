@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "./store";
 import Category from "./components/category";
@@ -8,7 +8,7 @@ import Recommend from "./components/recommend";
 import ToTop from "../../common/toTop";
 import { HomeWrapper, HomLeftSection, HomeRightSection } from "./style";
 
-class Home extends Component {
+class Home extends PureComponent {
 
   componentDidMount() {
     this.props.getHomeData();

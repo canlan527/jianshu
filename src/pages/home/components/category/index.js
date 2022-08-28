@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {connect} from 'react-redux';
 import { CateWrapper, CateItem, CateImg, SeeMore } from "./style";
 
-class Category extends Component {
+class Category extends PureComponent {
   render() {
     return (
       <CateWrapper>

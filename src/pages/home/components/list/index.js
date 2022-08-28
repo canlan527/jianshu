@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "../../store";
-import {
+import StyledLink, {
   ListWrapper,
   ListItem,
   ListItemInfo,
@@ -13,7 +13,7 @@ import {
   ReadNoMore,
 } from "./style";
 
-class List extends Component {
+class List extends PureComponent {
   renderListImg(url) {
     if (url) {
       return (
@@ -33,7 +33,7 @@ class List extends Component {
       renderReadMore = <ReadNoMore>没有更多了……</ReadNoMore>;
     } else {
       renderReadMore = (
-        <ReadMore onClick={() => handleLoadMore(page, totalPage)}>
+        <ReadMore onClick={() => handleLoadMore(page)}>
           阅读更多
         </ReadMore>
       );
@@ -42,30 +42,31 @@ class List extends Component {
     return (
       <ListWrapper>
         {blogList.map((item, index) => (
-          <ListItem key={index}>
-            <ListItemInfo>
-              <ItemTitle>{item.get("title")}</ItemTitle>
-              <ItemDesc>{item.get("desc")}</ItemDesc>
-              <ItemInfo>
-                <div className="item-meta price">
-                  <i className="iconfont price">&#xe91f;</i>
-                  {item.get("price")}
-                </div>
-                <div className="item-meta author">{item.get("author")}</div>
-                <div className="item-meta">
-                  <i className="iconfont comment">&#xe62b;</i>
-                  <span className="commentNumber">{item.get("comment")}</span>
-                </div>
-                <div className="item-meta">
-                  <i className="iconfont like">&#xe707;</i>
-                  <span className="likeNumber">{item.get("like")}</span>
-                </div>
-              </ItemInfo>
-            </ListItemInfo>
-            {this.renderListImg(item.get("imgUrl"))}
-          </ListItem>
+          <StyledLink key={index} to="detail">
+            <ListItem>
+              <ListItemInfo>
+                <ItemTitle>{item.get("title")}</ItemTitle>
+                <ItemDesc>{item.get("desc")}</ItemDesc>
+                <ItemInfo>
+                  <div className="item-meta price">
+                    <i className="iconfont price">&#xe91f;</i>
+                    {item.get("price")}
+                  </div>
+                  <div className="item-meta author">{item.get("author")}</div>
+                  <div className="item-meta">
+                    <i className="iconfont comment">&#xe62b;</i>
+                    <span className="commentNumber">{item.get("comment")}</span>
+                  </div>
+                  <div className="item-meta">
+                    <i className="iconfont like">&#xe707;</i>
+                    <span className="likeNumber">{item.get("like")}</span>
+                  </div>
+                </ItemInfo>
+              </ListItemInfo>
+              {this.renderListImg(item.get("imgUrl"))}
+            </ListItem>
+          </StyledLink>
         ))}
-        {/* <ReadMore onClick={() => handleLoadMore(page, totalPage)}>阅读更多</ReadMore> */}
         {renderReadMore}
       </ListWrapper>
     );
@@ -81,8 +82,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleLoadMore(page, totalPage) {
-    console.log(page);
+  handleLoadMore(page) {
     page++;
     const action = actionCreators.loadMoreAction(page);
     dispatch(action);

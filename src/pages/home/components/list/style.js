@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const ListWrapper = styled.ul`
@@ -86,8 +88,7 @@ export const ItemInfo = styled.div`
   }   
 `;
 
-
-export const ListImg = styled.a`
+export const ListImg = styled.div`
   display: inline-block;
   width: 150px;
   height: 100px;
@@ -125,3 +126,15 @@ export const ReadNoMore = styled.div`
   font-size: 13px;
   text-align: center;
 `;
+
+// 解决 react-router-dom 下划线样式的问题
+const StyledLink = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
+
+export default (props) => <StyledLink {...props} />;

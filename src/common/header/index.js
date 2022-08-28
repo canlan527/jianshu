@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
+import { Link } from "react-router-dom";
 import {
   HeaderWrapper,
   Logo,
@@ -50,8 +51,12 @@ const getListArea = (props) => {
       <SearchInfo onMouseEnter={handleMouseIn} onMouseLeave={handleMouseLeave}>
         <SearchInfoTitle>
           热门搜索
-          <SearchInfoSwitch onClick={() => handlePageChange(page, totalPage, spinRef)}>
-            <i ref={spinRef} className="iconfont spin">&#xe6aa;</i>
+          <SearchInfoSwitch
+            onClick={() => handlePageChange(page, totalPage, spinRef)}
+          >
+            <i ref={spinRef} className="iconfont spin">
+              &#xe6aa;
+            </i>
             换一批
           </SearchInfoSwitch>
         </SearchInfoTitle>
@@ -65,9 +70,13 @@ const Header = (props) => {
   const { focused, handleInputFocus, handleInputBlur, list } = props;
   return (
     <HeaderWrapper>
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
       <Nav>
-        <NavItem className="left active">首页</NavItem>
+        <Link to="/">
+          <NavItem className="left active">首页</NavItem>
+        </Link>
         <NavItem className="left">
           <i className="iconfont">&#xe61a;</i>
           下载App
@@ -138,11 +147,11 @@ const mapDispatchToProps = (dispatch) => {
       const action = actionCreators.mouseInAction(false);
       dispatch(action);
     },
-    handlePageChange(page, totalPage,spinRef) {
-      const spinDom = spinRef.current;// 拿到ref中的dom
-      const reg = /[^0-9]/ig; // 定义截取数字的正则
-      let originAngle = spinDom.style.transform.replace(reg, ''); // 拿到spinDom的原始旋转度数
-      originAngle = originAngle ? parseInt(originAngle, 10) : 0; // 因为后续要累加旋转度数，这里要转换成数字类型 
+    handlePageChange(page, totalPage, spinRef) {
+      const spinDom = spinRef.current; // 拿到ref中的dom
+      const reg = /[^0-9]/gi; // 定义截取数字的正则
+      let originAngle = spinDom.style.transform.replace(reg, ""); // 拿到spinDom的原始旋转度数
+      originAngle = originAngle ? parseInt(originAngle, 10) : 0; // 因为后续要累加旋转度数，这里要转换成数字类型
       spinDom.style.transform = `rotate(${360 + originAngle}deg)`; // 用360度和前一次旋转的度数累加
       // console.log(originAngle,spinDom.style.transform);
       if (page < totalPage) {
