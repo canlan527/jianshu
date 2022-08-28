@@ -8,6 +8,9 @@ export const WriterHeader = styled.div`
   font-size: 14px;
   color: #969696;
   padding: 12px 0 8px 0;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 

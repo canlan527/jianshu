@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
 import { Link } from "react-router-dom";
+import ChangePage from "../changePage";
 import {
   HeaderWrapper,
   Logo,
@@ -20,7 +21,7 @@ import {
 } from "./style";
 
 const getListArea = (props) => {
-  const spinRef = React.createRef();
+  const changePageRef = React.createRef();
   const {
     focused,
     mouseIn,
@@ -52,12 +53,9 @@ const getListArea = (props) => {
         <SearchInfoTitle>
           热门搜索
           <SearchInfoSwitch
-            onClick={() => handlePageChange(page, totalPage, spinRef)}
+            onClick={() => handlePageChange(page, totalPage, changePageRef)}
           >
-            <i ref={spinRef} className="iconfont spin">
-              &#xe6aa;
-            </i>
-            换一批
+            <ChangePage ref={changePageRef}></ChangePage>
           </SearchInfoSwitch>
         </SearchInfoTitle>
         <SearchInfoList>{infoItemList}</SearchInfoList>
@@ -147,13 +145,8 @@ const mapDispatchToProps = (dispatch) => {
       const action = actionCreators.mouseInAction(false);
       dispatch(action);
     },
-    handlePageChange(page, totalPage, spinRef) {
-      const spinDom = spinRef.current; // 拿到ref中的dom
-      const reg = /[^0-9]/gi; // 定义截取数字的正则
-      let originAngle = spinDom.style.transform.replace(reg, ""); // 拿到spinDom的原始旋转度数
-      originAngle = originAngle ? parseInt(originAngle, 10) : 0; // 因为后续要累加旋转度数，这里要转换成数字类型
-      spinDom.style.transform = `rotate(${360 + originAngle}deg)`; // 用360度和前一次旋转的度数累加
-      // console.log(originAngle,spinDom.style.transform);
+    handlePageChange(page, totalPage, changePageRef) {
+      changePageRef.current.handleChange(); // 调用ChangePage的handleChange方法
       if (page < totalPage) {
         // 当前页小于总页码的时候
         page++; // 页码新增

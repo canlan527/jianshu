@@ -12,6 +12,7 @@ class Home extends PureComponent {
 
   componentDidMount() {
     this.props.getHomeData();
+    this.props.getWriterListData();
     this.bindEvent();
   }
 
@@ -57,6 +58,10 @@ const mapDispatch = (dispatch) => {
   return {
     getHomeData() {
       const action = actionCreators.fetchData();
+      dispatch(action);
+    },
+    getWriterListData() {
+      const action = actionCreators.fetchWriterData();
       dispatch(action);
     },
     handleScrollTop(e) {

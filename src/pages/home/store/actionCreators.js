@@ -8,7 +8,6 @@ const getHomeData = (data) => ({
   cateList: data.cateList,
   blogList: data.blogList,
   recommendList: data.recommendList,
-  writerList: data.writerList,
 })
 
 // 分页
@@ -16,6 +15,12 @@ const getBlogData = (data, nextPage) => ({
   type: actionTypes.LOAD_MORE_BLOG,
   data: fromJS(data),
   nextPage,
+})
+
+const getWriterList = (data) => ({
+  type: actionTypes.GET_WRITER_DATA,
+  data: fromJS(data),
+  writerTotalPage: Math.ceil(data.length / 5),
 })
 
 // 获取首页各组件的数据
@@ -33,7 +38,7 @@ export const fetchData = () => {
 export const loadMoreAction = (page) => {
   return (dispatch) => {
     axios.get(`./api/blogList.json?page=${page}`).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       const {data} = res.data;
       const action = getBlogData(data, page)
       dispatch(action)
@@ -46,3 +51,20 @@ export const changeScrollTop = (value) => ({
   type: actionTypes.CHANGE_SCROLL_TOP_SHOW,
   value,
 })
+
+// 获取作者列表数据
+export const fetchWriterData = () => {
+  return (dispatch) => {
+    axios.get('/api/writerList.json').then(res => {
+      const {data} = res.data;
+      const action = getWriterList(data);
+      dispatch(action)
+    })
+  }
+}
+
+// 作者区域分页处理
+export const changeWriterPage = (page) =>({
+  type: actionTypes.CHANGE_WRITER_PAGE,
+  page,
+});
