@@ -17,3 +17,8 @@ export const getBlogData = (id) => {
     })
   }
 }
+
+export const setToTopAction = (value) => ({
+  type: actionTypes.SET_TO_TOP,
+  value,
+})

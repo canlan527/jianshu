@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { actionCreators } from './store'
-
+import ToTop from '../../common/toTop';
 import {
   DetailWrapper,
   DetailContainer,
@@ -20,12 +20,22 @@ import {
 class Detail extends Component {
 
   componentDidMount() {
+    this.bindEvent()
     this.props.getData()
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.props.handleScroll)
+  }
+
+  bindEvent = () => {
+    window.addEventListener('scroll', this.props.handleScroll)
+  }
+
+
   render() {
 
-    const { title, content }  = this.props;
+    const { title, content, showToTop }  = this.props;
     const renderContent = content ? content : '<div>暂无内容</div>'
 
     return (
@@ -57,7 +67,7 @@ class Detail extends Component {
               </AuthorInfo>
             </BlogAuthorInfoHead>
 
-            <BlogContent dangerouslySetInnerHTML={{__html: content}}>
+            <BlogContent dangerouslySetInnerHTML={{__html: renderContent}}>
             </BlogContent>
 
             <BlogSideInfo>
@@ -98,6 +108,7 @@ class Detail extends Component {
             </div>
           </DetailBtnArea>
         </DetailContainer>
+        { showToTop ? <ToTop></ToTop> : null }
       </DetailWrapper>
     );
   }
@@ -105,13 +116,20 @@ class Detail extends Component {
 
 const mapState = (state) => ({
   title: state.getIn(['detail', 'title']),
-  content: state.getIn(['detail', 'content'])
+  content: state.getIn(['detail', 'content']),
+  showToTop: state.getIn(['detail', 'showToTop'])
 })
 
 const mapDispatch = (dispatch) => ({
   getData() {
     const action = actionCreators.getBlogData(111);
     dispatch(action);
+  },
+  handleScroll() {
+    const scrollTop = document.documentElement.scrollTop;
+    const value = scrollTop > 720 ? true : false;
+    const action = actionCreators.setToTopAction(value)
+    dispatch(action)
   }
 })
 

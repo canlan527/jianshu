@@ -3,7 +3,8 @@ import * as actionTypes from './constants';
 
 const defaultState = fromJS({
   title: '',
-  content: ''
+  content: '',
+  showToTop: false,
 })
 
 export default (state = defaultState, action) => {
@@ -12,7 +13,9 @@ export default (state = defaultState, action) => {
       return state.merge({
         title: action.title,
         content: action.content,
-      })
+      });
+    case actionTypes.SET_TO_TOP:
+      return state.set('showToTop', action.value);
     default:
       return state;
   }
