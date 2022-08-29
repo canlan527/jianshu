@@ -21,7 +21,7 @@ class Detail extends Component {
 
   componentDidMount() {
     this.bindEvent()
-    this.props.getData()
+    this.props.getData(this.props.match.params.id)
   }
 
   componentWillUnmount() {
@@ -35,14 +35,14 @@ class Detail extends Component {
 
   render() {
 
-    const { title, content, showToTop }  = this.props;
+    const { title, content, showToTop, match }  = this.props;
     const renderContent = content ? content : '<div>暂无内容</div>'
-
+    console.log(this.props);
     return (
       <DetailWrapper>
         <DetailContainer>
           <DetailBlogArea>
-            <BlogTitleInfo>{title}</BlogTitleInfo>
+            <BlogTitleInfo>{match.params.id + title}</BlogTitleInfo>
             <BlogAuthorInfoHead>
               <BlogAuthorImg>
                 <img
@@ -121,8 +121,8 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  getData() {
-    const action = actionCreators.getBlogData(111);
+  getData(id) {
+    const action = actionCreators.getBlogData(id);
     dispatch(action);
   },
   handleScroll() {

@@ -42,7 +42,7 @@ class List extends PureComponent {
     return (
       <ListWrapper>
         {blogList.map((item, index) => (
-          <StyledLink key={index} to="detail">
+          <StyledLink key={index} to={"detail/" + item.get('id')}>
             <ListItem>
               <ListItemInfo>
                 <ItemTitle>{item.get("title")}</ItemTitle>
