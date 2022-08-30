@@ -37,7 +37,6 @@ class Detail extends Component {
 
     const { title, content, showToTop, match }  = this.props;
     const renderContent = content ? content : '<div>暂无内容</div>'
-    console.log(this.props);
     return (
       <DetailWrapper>
         <DetailContainer>

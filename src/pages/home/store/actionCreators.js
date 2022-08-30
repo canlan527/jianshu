@@ -38,7 +38,6 @@ export const fetchData = () => {
 export const loadMoreAction = (page) => {
   return (dispatch) => {
     axios.get(`./api/blogList.json?page=${page}`).then(res => {
-      // console.log(res.data);
       const {data} = res.data;
       const action = getBlogData(data, page)
       dispatch(action)

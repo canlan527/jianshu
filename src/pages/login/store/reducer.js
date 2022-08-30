@@ -7,7 +7,6 @@ const defaultState = fromJS({
 })
 
 const loginfn = (state, action) => {
-  console.log(action.status);
   return state.merge({
     username: action.account,
     loginStatus: action.status,
@@ -15,7 +14,6 @@ const loginfn = (state, action) => {
 }
 
 export default (state = defaultState, action) => {
-  console.log(action);
   switch(action.type) {
     case actionTypes.LOGIN: 
       return loginfn(state, action);

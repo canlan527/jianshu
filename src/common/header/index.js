@@ -139,7 +139,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus(list) {
-      // console.log(list);
       !list.size && dispatch(actionCreators.getHotwords());
       dispatch(actionCreators.searchFocusAction(true));
     },
@@ -169,7 +168,6 @@ const mapDispatchToProps = (dispatch) => {
       }
     },
     handleLogout() {
-      console.log(123);
       const action = LoginCreators.logout()
       dispatch(action)
     }

@@ -65,7 +65,6 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   handlePageChange(page, totalPage, changePageRef) {
-    console.log(page, totalPage, changePageRef);
     changePageRef.handleChange();
     // 处理page totalPage
     page = page < totalPage ? ++page : 1;
