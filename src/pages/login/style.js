@@ -51,4 +51,5 @@ export const LoginBtn = styled.div`
   line-height: 38px;
   text-align: center;
   margin: 18px auto 0;
+  cursor: pointer;
 `;

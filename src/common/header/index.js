@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
+import { actionCreators as LoginCreators } from '../../pages/login/store'
 import { Link } from "react-router-dom";
 import ChangePage from "../changePage";
 import {
@@ -65,7 +66,7 @@ const getListArea = (props) => {
 };
 
 const Header = (props) => {
-  const { focused, handleInputFocus, handleInputBlur, list } = props;
+  const { focused, handleInputFocus, handleInputBlur, list, loginStatus, handleLogout} = props;
   return (
     <HeaderWrapper>
       <Link to="/">
@@ -87,7 +88,15 @@ const Header = (props) => {
           <i className="iconfont">&#xe64f;</i>
           IT技术
         </NavItem>
-        <NavItem className="right">登录</NavItem>
+
+        {loginStatus ? (
+          <NavItem onClick={handleLogout} className="right">你好! 灿烂</NavItem>
+        ) : (
+          <Link to="/login">
+            <NavItem className="right">登录</NavItem>
+          </Link>
+        )}
+
         <NavItem className="right">
           <i className="iconfont font-a">&#xe76a;</i>
         </NavItem>
@@ -123,6 +132,7 @@ const mapStateToProps = (state) => {
     page: state.getIn(["header", "page"]),
     totalPage: state.getIn(["header", "totalPage"]),
     mouseIn: state.getIn(["header", "mouseIn"]),
+    loginStatus: state.getIn(["login", "loginStatus"]),
   };
 };
 
@@ -158,6 +168,11 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(action);
       }
     },
+    handleLogout() {
+      console.log(123);
+      const action = LoginCreators.logout()
+      dispatch(action)
+    }
   };
 };
 
