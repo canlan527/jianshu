@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 import { actionCreators } from './store'
 import ToTop from '../../common/toTop';
 import {
@@ -132,4 +133,4 @@ const mapDispatch = (dispatch) => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(Detail)
+export default connect(mapState, mapDispatch)(withRouter(Detail))
